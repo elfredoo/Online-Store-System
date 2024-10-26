@@ -8,7 +8,7 @@ public class WinterJacket extends Product {
     private String size;
     private String color;
     @OneToOne
-    @JoinColumn(name = "additional_feature_id", updatable = true)
+    @JoinColumn(name = "additional_feature_id", unique = true)
     private AdditionalFeatures additionalFeatures;
 
     public WinterJacket(Long id, String name,
