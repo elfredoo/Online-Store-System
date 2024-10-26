@@ -1,4 +1,4 @@
-package com.website.system.Product;
+package com.website.system.Product.WinterJacket;
 
 public class AdditionalFeatures {
     private boolean waterproof;

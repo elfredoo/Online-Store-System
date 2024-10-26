@@ -1,6 +1,8 @@
-package com.website.system.Product;
+package com.website.system.Product.Laptop;
 
-public class Laptop extends Product{
+import com.website.system.Product.Product;
+
+public class Laptop extends Product {
     private String processor;
     private int ram;
     private String graphicsCard;
