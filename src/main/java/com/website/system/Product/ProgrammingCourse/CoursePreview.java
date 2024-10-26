@@ -1,9 +1,14 @@
 package com.website.system.Product.ProgrammingCourse;
 
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
 public class CoursePreview {
     private Long id;
+    @ManyToOne
+    @JoinColumn(name = "programming_course_id")
     private ProgrammingCourse programmingCourse;
     private String description;
     private String courseFragment;
