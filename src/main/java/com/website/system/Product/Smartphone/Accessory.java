@@ -1,4 +1,4 @@
-package com.website.system.Product;
+package com.website.system.Product.Smartphone;
 
 public class Accessory {
     private Long id;

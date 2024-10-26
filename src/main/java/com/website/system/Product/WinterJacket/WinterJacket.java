@@ -1,11 +1,10 @@
-package com.website.system.Product;
+package com.website.system.Product.WinterJacket;
 
+import com.website.system.Product.Product;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 
-import java.util.List;
-
-public class WinterJacket extends Product{
+public class WinterJacket extends Product {
     private String size;
     private String color;
     @OneToOne

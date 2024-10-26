@@ -1,6 +1,4 @@
-package com.website.system.Product;
-
-import org.springframework.stereotype.Service;
+package com.website.system.Product.SportShoe;
 
 import java.util.HashMap;
 import java.util.Map;

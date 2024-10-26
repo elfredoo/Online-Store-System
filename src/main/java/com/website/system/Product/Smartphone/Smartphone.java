@@ -1,11 +1,12 @@
-package com.website.system.Product;
+package com.website.system.Product.Smartphone;
 
+import com.website.system.Product.Product;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 
 import java.util.List;
 
-public class Smartphone extends Product{
+public class Smartphone extends Product {
     private String color;
     private int batteryCapacity;
     @ManyToMany

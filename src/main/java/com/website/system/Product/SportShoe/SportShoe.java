@@ -1,6 +1,6 @@
-package com.website.system.Product;
+package com.website.system.Product.SportShoe;
 
-import com.website.system.NoSuchShoeSizeException;
+import com.website.system.Product.Product;
 
 import java.util.Optional;
 
