@@ -8,7 +8,7 @@ public class Laptop extends Product{
     private int diskCapacity;
     private double screenSize;
 
-    public Laptop(Long id, String name, 
+    public Laptop(Long id, String name,
                   double price, int quantity,
                   String processor, int ram,
                   String graphicsCard, String diskType,
