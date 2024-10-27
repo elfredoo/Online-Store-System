@@ -1,11 +1,11 @@
 package com.website.system.Product.ProgrammingCourse;
 
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
+@Entity
 public class CoursePreview {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     @JoinColumn(name = "programming_course_id")
@@ -13,8 +13,10 @@ public class CoursePreview {
     private String description;
     private String courseFragment;
 
-    public CoursePreview(Long id, ProgrammingCourse programmingCourse, String description, String courseFragment) {
-        this.id = id;
+    public CoursePreview() {
+    }
+
+    public CoursePreview(ProgrammingCourse programmingCourse, String description, String courseFragment) {
         this.programmingCourse = programmingCourse;
         this.description = description;
         this.courseFragment = courseFragment;

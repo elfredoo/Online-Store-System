@@ -1,13 +1,19 @@
 package com.website.system.Product.AntiWrinkleCream;
 
 import com.website.system.Product.Product;
+import jakarta.persistence.Entity;
 
+@Entity
 public class AntiWrinkleCream extends Product {
     private int ageGroup;
     private SkinType skinType;
 
-    public AntiWrinkleCream(Long id, String name, double price, int quantity, int ageGroup, SkinType skinType) {
-        super(id, name, price, quantity);
+    public AntiWrinkleCream() {
+
+    }
+
+    public AntiWrinkleCream(String name, double price, int quantity, int ageGroup, SkinType skinType) {
+        super(name, price, quantity);
         this.ageGroup = ageGroup;
         this.skinType = skinType;
     }

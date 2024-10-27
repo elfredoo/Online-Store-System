@@ -1,17 +1,24 @@
 package com.website.system.Product.NordicWalkingPoles;
 
 import com.website.system.Product.Product;
+import jakarta.persistence.Entity;
 
+@Entity
 public class NordicWalkingPoles extends Product {
     private double minHeight;
     private double maxHeight;
     private UserPurpose userPurpose;
 
-    public NordicWalkingPoles(Long id, String name,
-                              double price, int quantity,
-                              double minHeight, double maxHeight,
+    public NordicWalkingPoles() {
+    }
+
+    public NordicWalkingPoles(String name,
+                              double price,
+                              int quantity,
+                              double minHeight,
+                              double maxHeight,
                               UserPurpose userPurpose) {
-        super(id, name, price, quantity);
+        super(name, price, quantity);
         this.minHeight = minHeight;
         this.maxHeight = maxHeight;
         this.userPurpose = userPurpose;

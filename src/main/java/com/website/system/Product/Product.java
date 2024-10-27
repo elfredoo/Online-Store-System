@@ -1,13 +1,23 @@
 package com.website.system.Product;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public abstract class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private double price;
     private int quantity;
 
-    public Product(Long id, String name, double price, int quantity) {
-        this.id = id;
+    public Product() {
+    }
+
+    public Product(String name, double price, int quantity) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;

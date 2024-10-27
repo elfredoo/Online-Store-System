@@ -1,9 +1,11 @@
 package com.website.system.Product.CrimeNovel;
 
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
+@Entity
 public class UserReview {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private double rating;
     private String comment;
@@ -11,8 +13,10 @@ public class UserReview {
     @JoinColumn(name = "crime_novel_id", nullable = false)
     private CrimeNovel crimeNovel;
 
-    public UserReview(Long id, double rating, String comment, CrimeNovel crimeNovel) {
-        this.id = id;
+    public UserReview() {
+    }
+
+    public UserReview(double rating, String comment, CrimeNovel crimeNovel) {
         this.rating = rating;
         this.comment = comment;
         this.crimeNovel = crimeNovel;
