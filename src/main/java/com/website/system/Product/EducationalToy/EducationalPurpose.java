@@ -1,14 +1,20 @@
 package com.website.system.Product.EducationalToy;
 
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 
 import java.util.List;
 
+@Entity
 public class EducationalPurpose {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     @ManyToMany(mappedBy = "educationalPurposes")
     private List<EducationalToy> educationalToy;
+
+    public EducationalPurpose() {
+    }
 
     public EducationalPurpose(Long id, String name, List<EducationalToy> educationalToy) {
         this.id = id;

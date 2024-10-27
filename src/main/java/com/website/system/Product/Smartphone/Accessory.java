@@ -1,37 +1,17 @@
 package com.website.system.Product.Smartphone;
 
-public class Accessory {
-    private Long id;
-    private String name;
-    private double price;
+import com.website.system.Product.Product;
+import jakarta.persistence.Entity;
 
-    public Accessory(Long id, String name, double price) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
+@Entity
+public class Accessory extends Product {
+    private String function;
+
+    public Accessory() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
+    public Accessory(String name, double price, int quantity, String function) {
+        super(name, price, quantity);
+        this.function = function;
     }
 }

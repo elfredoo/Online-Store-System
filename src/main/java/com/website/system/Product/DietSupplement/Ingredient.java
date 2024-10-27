@@ -1,17 +1,22 @@
 package com.website.system.Product.DietSupplement;
 
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 
 import java.util.List;
 
+@Entity
 public class Ingredient {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     @ManyToMany(mappedBy = "ingredients")
     private List<DietSupplement> dietSupplements;
 
-    public Ingredient(Long id, String name, List<DietSupplement> dietSupplements) {
-        this.id = id;
+    public Ingredient() {
+    }
+
+    public Ingredient(String name, List<DietSupplement> dietSupplements) {
         this.name = name;
         this.dietSupplements = dietSupplements;
     }

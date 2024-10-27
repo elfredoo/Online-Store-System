@@ -2,11 +2,13 @@ package com.website.system.Product.CrimeNovel;
 
 import com.website.system.Product.Product;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 
 import java.util.List;
 
+@Entity
 public class CrimeNovel extends Product {
     private double averageRating;
     @OneToMany(
@@ -15,11 +17,11 @@ public class CrimeNovel extends Product {
             fetch = FetchType.LAZY)
     private List<UserReview> userReviews;
 
-    public CrimeNovel(Long id, String name,
-                      double price, int quantity,
-                      double averageRating,
-                      List<UserReview> userReviews) {
-        super(id, name, price, quantity);
+    public CrimeNovel() {
+    }
+
+    public CrimeNovel(String name, double price, int quantity, double averageRating, List<UserReview> userReviews) {
+        super(name, price, quantity);
         this.averageRating = averageRating;
         this.userReviews = userReviews;
     }

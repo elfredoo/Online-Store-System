@@ -1,20 +1,24 @@
 package com.website.system.Product.DietSupplement;
 
 import com.website.system.Product.Product;
+import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import org.hibernate.mapping.Property;
 
 import java.util.Set;
 
+@Entity
 public class DietSupplement extends Product {
     @ManyToMany
     private Set<Ingredient> ingredients;
     private String properties;
 
-    public DietSupplement(Long id, String name,
-                          double price, int quantity,
-                          Set<Ingredient> ingredients, String properties) {
-        super(id, name, price, quantity);
+    public DietSupplement() {
+
+    }
+
+    public DietSupplement(String name, double price, int quantity, Set<Ingredient> ingredients, String properties) {
+        super(name, price, quantity);
         this.ingredients = ingredients;
         this.properties = properties;
     }

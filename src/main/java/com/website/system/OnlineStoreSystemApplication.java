@@ -11,12 +11,7 @@ import java.util.Scanner;
 public class OnlineStoreSystemApplication {
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext context = SpringApplication.run(OnlineStoreSystemApplication.class, args);
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Podaj rozmiar stopy");
-        double shoeLength = Double.parseDouble(scanner.next());
-        SportShoe testShoe = new SportShoe(1L, "test shoe", 123.123, 12, shoeLength);
-        System.out.println(testShoe);
+        SpringApplication.run(OnlineStoreSystemApplication.class, args);
     }
 
 }
