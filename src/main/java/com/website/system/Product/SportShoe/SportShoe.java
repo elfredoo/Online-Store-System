@@ -1,17 +1,14 @@
 package com.website.system.Product.SportShoe;
 
 import com.website.system.Product.Product;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import org.hibernate.engine.jdbc.Size;
 
 import java.util.List;
 
 @Entity
 public class SportShoe extends Product {
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "sport_shoe_id")
     private List<ShoeSize> availableShoeSizes;
 

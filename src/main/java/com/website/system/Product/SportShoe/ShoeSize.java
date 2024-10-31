@@ -61,4 +61,15 @@ public class ShoeSize {
     public void setMaxFootLength(double maxFootLength) {
         this.maxFootLength = maxFootLength;
     }
+
+    @Override
+    public String toString() {
+        return "ShoeSize{" +
+                "id=" + id +
+                ", size=" + size +
+                ", shoeLength=" + shoeLength +
+                ", minFootLength=" + minFootLength +
+                ", maxFootLength=" + maxFootLength +
+                '}';
+    }
 }
