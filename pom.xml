@@ -63,9 +63,6 @@
             <artifactId>mysql-connector-j</artifactId>
             <version>9.1.0</version>
         </dependency>
-
-
-
     </dependencies>
 
     <build>
@@ -73,6 +70,17 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>4.10.0</version>
+                <configuration>
+                    <changeLogFile>src/main/resources/db/changelog/db.changelog.xml</changeLogFile>
+                    <url>jdbc:mysql://localhost:3306/ecommerce_db</url>
+                    <username>root</username>
+                    <password>admin</password>
+                </configuration>
             </plugin>
         </plugins>
     </build>

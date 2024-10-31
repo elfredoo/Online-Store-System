@@ -5,13 +5,13 @@ import jakarta.persistence.Entity;
 
 @Entity
 public class Accessory extends Product {
-    private String function;
+    private String functionality;
 
     public Accessory() {
     }
 
-    public Accessory(String name, double price, int quantity, String function) {
+    public Accessory(String name, double price, int quantity, String functionality) {
         super(name, price, quantity);
-        this.function = function;
+        this.functionality = functionality;
     }
 }

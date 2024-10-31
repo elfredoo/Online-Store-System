@@ -1,34 +1,29 @@
 package com.website.system.Product.WinterJacket;
 
 import com.website.system.Product.Product;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class WinterJacket extends Product {
-    private String size;
-    private String color;
-    private boolean waterproof;
-    private boolean ventilation;
-    private boolean detachableHood;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "winter_jacket_id")
+    private List<Features> features;
 
     public WinterJacket() {
     }
 
-    public WinterJacket(String name,
-                        double price,
-                        int quantity,
-                        String size,
-                        String color,
-                        boolean waterproof,
-                        boolean ventilation,
-                        boolean detachableHood) {
+    public WinterJacket(String name, double price, int quantity, List<Features> features) {
         super(name, price, quantity);
-        this.size = size;
-        this.color = color;
-        this.waterproof = waterproof;
-        this.ventilation = ventilation;
-        this.detachableHood = detachableHood;
+        this.features = features;
+    }
+
+    public List<Features> getFeatures() {
+        return features;
+    }
+
+    public void setFeatures(List<Features> features) {
+        this.features = features;
     }
 }

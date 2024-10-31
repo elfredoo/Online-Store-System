@@ -10,7 +10,6 @@ import java.util.List;
 
 @Entity
 public class CrimeNovel extends Product {
-    private double averageRating;
     @OneToMany(
             mappedBy = "crimeNovel",
             cascade = CascadeType.ALL,
@@ -20,18 +19,9 @@ public class CrimeNovel extends Product {
     public CrimeNovel() {
     }
 
-    public CrimeNovel(String name, double price, int quantity, double averageRating, List<UserReview> userReviews) {
+    public CrimeNovel(String name, double price, int quantity, List<UserReview> userReviews) {
         super(name, price, quantity);
-        this.averageRating = averageRating;
         this.userReviews = userReviews;
-    }
-
-    public double getAverageRating() {
-        return averageRating;
-    }
-
-    public void setAverageRating(double averageRating) {
-        this.averageRating = averageRating;
     }
 
     public List<UserReview> getUserReviews() {

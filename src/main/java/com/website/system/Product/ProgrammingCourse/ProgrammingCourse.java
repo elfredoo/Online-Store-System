@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 public class ProgrammingCourse extends Product {
-    @OneToMany
+    @OneToMany(mappedBy = "programmingCourse")
     private List<CoursePreview> coursePreview;
 
     public ProgrammingCourse() {
