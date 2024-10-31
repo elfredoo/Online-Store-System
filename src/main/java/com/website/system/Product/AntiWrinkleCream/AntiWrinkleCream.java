@@ -2,10 +2,13 @@ package com.website.system.Product.AntiWrinkleCream;
 
 import com.website.system.Product.Product;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 @Entity
 public class AntiWrinkleCream extends Product {
     private int ageGroup;
+    @Enumerated(EnumType.STRING)
     private SkinType skinType;
 
     public AntiWrinkleCream() {

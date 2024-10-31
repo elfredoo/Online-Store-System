@@ -2,10 +2,13 @@ package com.website.system.Product.BabyClothes;
 
 import com.website.system.Product.Product;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 @Entity
 public class BabyClothes extends Product {
     private double babyHeight;
+    @Enumerated(EnumType.STRING)
     private Season season;
 
     public BabyClothes() {

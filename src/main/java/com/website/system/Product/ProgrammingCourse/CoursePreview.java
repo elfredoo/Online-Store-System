@@ -7,18 +7,18 @@ public class CoursePreview {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "programming_course_id")
-    private ProgrammingCourse programmingCourse;
     private String description;
+    @ManyToOne
+    @JoinColumn(name = "programming_course_id", nullable = false)
+    private ProgrammingCourse programmingCourse;
     private String courseFragment;
 
     public CoursePreview() {
     }
 
-    public CoursePreview(ProgrammingCourse programmingCourse, String description, String courseFragment) {
-        this.programmingCourse = programmingCourse;
+    public CoursePreview(String description, ProgrammingCourse programmingCourse, String courseFragment) {
         this.description = description;
+        this.programmingCourse = programmingCourse;
         this.courseFragment = courseFragment;
     }
 
@@ -28,14 +28,6 @@ public class CoursePreview {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public ProgrammingCourse getProgrammingCourse() {
-        return programmingCourse;
-    }
-
-    public void setProgrammingCourse(ProgrammingCourse programmingCourse) {
-        this.programmingCourse = programmingCourse;
     }
 
     public String getDescription() {
@@ -52,5 +44,13 @@ public class CoursePreview {
 
     public void setCourseFragment(String courseFragment) {
         this.courseFragment = courseFragment;
+    }
+
+    public ProgrammingCourse getProgrammingCourse() {
+        return programmingCourse;
+    }
+
+    public void setProgrammingCourse(ProgrammingCourse programmingCourse) {
+        this.programmingCourse = programmingCourse;
     }
 }

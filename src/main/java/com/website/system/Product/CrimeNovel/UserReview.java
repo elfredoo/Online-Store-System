@@ -8,7 +8,7 @@ public class UserReview {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private double rating;
-    private String comment;
+    private String content;
     @ManyToOne
     @JoinColumn(name = "crime_novel_id", nullable = false)
     private CrimeNovel crimeNovel;
@@ -16,9 +16,9 @@ public class UserReview {
     public UserReview() {
     }
 
-    public UserReview(double rating, String comment, CrimeNovel crimeNovel) {
+    public UserReview(double rating, String content, CrimeNovel crimeNovel) {
         this.rating = rating;
-        this.comment = comment;
+        this.content = content;
         this.crimeNovel = crimeNovel;
     }
 
@@ -38,12 +38,12 @@ public class UserReview {
         this.rating = rating;
     }
 
-    public String getComment() {
-        return comment;
+    public String getContent() {
+        return content;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setContent(String comment) {
+        this.content = comment;
     }
 
     public CrimeNovel getCrimeNovel() {
