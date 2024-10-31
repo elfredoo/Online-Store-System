@@ -1,17 +1,29 @@
 package com.website.system;
 
+import com.website.system.Product.AntiWrinkleCream.AntiWrinkleCream;
+import com.website.system.Product.AntiWrinkleCream.SkinType;
+import com.website.system.Product.NordicWalkingPoles.NordicWalkingPoles;
+import com.website.system.Product.Product;
+import com.website.system.Product.ProductManager;
+import com.website.system.Product.SportShoe.ShoeSize;
 import com.website.system.Product.SportShoe.SportShoe;
+import com.website.system.Product.WinterJacket.WinterJacket;
+import org.hibernate.engine.jdbc.Size;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import java.util.Scanner;
+import java.util.*;
 
 @SpringBootApplication
 public class OnlineStoreSystemApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(OnlineStoreSystemApplication.class, args);
+        ConfigurableApplicationContext context = SpringApplication.run(OnlineStoreSystemApplication.class, args);
+        ProductManager productManager = context.getBean(ProductManager.class);
+        List<NordicWalkingPoles> allNordicWalkingPoles = productManager.getAllProducts(NordicWalkingPoles.class);
+        System.out.println(allNordicWalkingPoles);
+        productManager.placeOrder(allNordicWalkingPoles);
     }
 
 }
