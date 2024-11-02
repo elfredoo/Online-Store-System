@@ -1,6 +1,7 @@
 package com.website.system.Product.CrimeNovel;
 
 import com.website.system.Product.Product;
+import com.website.system.Product.ProductType;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -19,8 +20,8 @@ public class CrimeNovel extends Product {
     public CrimeNovel() {
     }
 
-    public CrimeNovel(String name, double price, int quantity, List<UserReview> userReviews) {
-        super(name, price, quantity);
+    public CrimeNovel(String name, double price, int quantity, ProductType type, List<UserReview> userReviews) {
+        super(name, price, quantity, type);
         this.userReviews = userReviews;
     }
 

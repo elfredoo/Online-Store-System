@@ -1,6 +1,7 @@
 package com.website.system.Product.NordicWalkingPoles;
 
 import com.website.system.Product.Product;
+import com.website.system.Product.ProductType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -16,8 +17,8 @@ public class NordicWalkingPoles extends Product {
     public NordicWalkingPoles() {
     }
 
-    public NordicWalkingPoles(String name, double price, int quantity, double minHeight, double maxHeight, UserPurpose userPurpose, double polesHeight) {
-        super(name, price, quantity);
+    public NordicWalkingPoles(String name, double price, int quantity, ProductType productType, double minHeight, double maxHeight, UserPurpose userPurpose, double polesHeight) {
+        super(name, price, quantity, productType);
         this.minHeight = minHeight;
         this.maxHeight = maxHeight;
         this.userPurpose = userPurpose;

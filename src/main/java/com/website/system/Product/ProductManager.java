@@ -5,30 +5,27 @@ import com.website.system.Product.AntiWrinkleCream.AntiWrinkleRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class ProductManager {
-    private final AntiWrinkleRepository antiWrinkleRepository;
     private final ProductRepository productRepository;
 
-    public ProductManager(AntiWrinkleRepository antiWrinkleRepository, ProductRepository productRepository) {
-        this.antiWrinkleRepository = antiWrinkleRepository;
+    public ProductManager(ProductRepository productRepository) {
         this.productRepository = productRepository;
-    }
-
-    public AntiWrinkleCream getCream(Long id){
-        return antiWrinkleRepository.findById(id).orElseThrow(NoSuchElementException::new);
     }
 
     public <T extends Product> T addProduct(T product) {
         return productRepository.save(product);
     }
 
-    public <T extends Product> void deleteProduct(T product) {
-        productRepository.delete(product);
+    public <T extends Product> void deleteProduct(Long id) {
+        productRepository.deleteById(id);
     }
 
     public <T extends Product> Optional<Product> getProductById(Long id, Class<T> clazz) {
@@ -39,8 +36,12 @@ public class ProductManager {
         return productRepository.findById(id);
     }
 
-    public <T extends Product> List<T> getAllProducts(Class<T> clazz) {
-        return productRepository.findAllByType(clazz);
+    public List<Product> getAllProducts() {
+        List<Product> productList = new ArrayList<>();
+        for (Product product : productRepository.findAll()) {
+            productList.add(product);
+        }
+        return productList;
     }
 
     public <T extends Product> void updateProduct(Long id, Product product, Class<T> clazz) {

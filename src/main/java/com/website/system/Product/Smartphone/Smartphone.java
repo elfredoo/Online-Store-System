@@ -1,6 +1,7 @@
 package com.website.system.Product.Smartphone;
 
 import com.website.system.Product.Product;
+import com.website.system.Product.ProductType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -18,8 +19,8 @@ public class Smartphone extends Product {
     public Smartphone() {
     }
 
-    public Smartphone(String name, double price, int quantity, String color, int batteryCapacity, List<Accessory> accessories) {
-        super(name, price, quantity);
+    public Smartphone(String name, double price, int quantity, ProductType type, String color, int batteryCapacity, List<Accessory> accessories) {
+        super(name, price, quantity, type);
         this.color = color;
         this.batteryCapacity = batteryCapacity;
         this.accessories = accessories;

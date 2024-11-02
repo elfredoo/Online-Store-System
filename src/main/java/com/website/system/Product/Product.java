@@ -13,14 +13,17 @@ public abstract class Product {
     private String name;
     private double price;
     private int quantity;
+    @Enumerated(EnumType.STRING)
+    private ProductType productType;
 
     public Product() {
     }
 
-    public Product(String name, double price, int quantity) {
+    public Product(String name, double price, int quantity, ProductType productType) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.productType = productType;
     }
 
     public Long getId() {
@@ -55,6 +58,14 @@ public abstract class Product {
         this.quantity = quantity;
     }
 
+    public ProductType getProductType() {
+        return productType;
+    }
+
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -62,6 +73,7 @@ public abstract class Product {
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", quantity=" + quantity +
+                ", productType=" + productType +
                 '}';
     }
 }
