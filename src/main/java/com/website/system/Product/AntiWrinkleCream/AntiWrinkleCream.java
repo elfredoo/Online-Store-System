@@ -1,9 +1,7 @@
 package com.website.system.Product.AntiWrinkleCream;
 
 import com.website.system.Product.Product;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 
 @Entity
 public class AntiWrinkleCream extends Product {
@@ -37,11 +35,4 @@ public class AntiWrinkleCream extends Product {
         this.skinType = skinType;
     }
 
-    @Override
-    public String toString() {
-        return "AntiWrinkleCream{" +
-                "ageGroup=" + ageGroup +
-                ", skinType=" + skinType +
-                '}';
-    }
 }

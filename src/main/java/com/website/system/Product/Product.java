@@ -2,11 +2,13 @@ package com.website.system.Product;
 
 import jakarta.persistence.*;
 
+import java.util.UUID;
+
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS) // Możesz wybrać strategię, np. SINGLE_TABLE
+@Inheritance(strategy = InheritanceType.JOINED) // Możesz wybrać strategię, np. SINGLE_TABLE
 public abstract class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private double price;

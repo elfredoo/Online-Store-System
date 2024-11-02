@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 public class Laptop extends Product {
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,  orphanRemoval = true)
     @JoinColumn(name = "laptop_id")
     private List<LaptopConfiguration> configuration;
 
