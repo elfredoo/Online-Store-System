@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 
@@ -23,10 +24,20 @@ public class CartManager {
     }
 
     @Transactional
-    public <T extends Product> void addProduct(Long shoppingCartId,Long productId, Class<T> clazz) {
+    public void addProduct(Long shoppingCartId,Long productId) {
         ShoppingCart shoppingCart = shoppingCartRepository.findById(shoppingCartId).orElseThrow();
-        Product product = productManager.getProductById(productId, clazz).orElseThrow();
+        Product product = productManager.getProductById(productId);
         shoppingCart.addProduct(product);
+        shoppingCartRepository.save(shoppingCart);
+    }
+
+    @Transactional
+    public void addProducts(Long shoppingCartId,List<Long> productIds) {
+        ShoppingCart shoppingCart = shoppingCartRepository.findById(shoppingCartId).orElseThrow(() -> new NoSuchElementException("Shopping cart does not exist"));
+        productIds.forEach(productId -> {
+            Product product = productManager.getProductById(productId);
+            shoppingCart.addProduct(product);
+        });
         shoppingCartRepository.save(shoppingCart);
     }
 
@@ -35,6 +46,9 @@ public class CartManager {
         return shoppingCart.getProducts();
     }
 
+    public ShoppingCart getShoppingCart(Long id) {
+        return shoppingCartRepository.findById(id).orElseThrow(()->new NoSuchElementException("No shopping cart found with provided ID:"+id));
+    }
 
 
 }

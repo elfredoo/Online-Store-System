@@ -20,7 +20,7 @@ public class ProductManager {
         this.productRepository = productRepository;
     }
 
-    public <T extends Product> T addProduct(T product) {
+    public Product addProduct(Product product) {
         return productRepository.save(product);
     }
 
@@ -28,12 +28,8 @@ public class ProductManager {
         productRepository.deleteById(id);
     }
 
-    public <T extends Product> Optional<Product> getProductById(Long id, Class<T> clazz) {
-        return productRepository.findById(id);
-    }
-
-    public Optional<Product> getProductById(Long id) {
-        return productRepository.findById(id);
+    public Product getProductById(Long id) {
+        return productRepository.findById(id).orElseThrow(()-> new NoSuchElementException("Product with id " + id + " not found"));
     }
 
     public List<Product> getAllProducts() {
@@ -44,11 +40,11 @@ public class ProductManager {
         return productList;
     }
 
-    public <T extends Product> void updateProduct(Long id, Product product, Class<T> clazz) {
-        getProductById(id,clazz).ifPresent(foundProduct->{
-            product.setId(foundProduct.getId());
-            productRepository.save(product);
-        });
+    public Product updateProduct(Long id, Product product) {
+        Product foundProduct = getProductById(id);
+        product.setId(foundProduct.getId());
+        Product savedProduct = productRepository.save(product);
+        return savedProduct;
     }
 
     @Transactional

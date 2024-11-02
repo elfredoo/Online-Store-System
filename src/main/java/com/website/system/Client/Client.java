@@ -1,5 +1,6 @@
 package com.website.system.Client;
 
+import com.website.system.Cart.ShoppingCart;
 import jakarta.persistence.*;
 
 @Entity
@@ -17,6 +18,8 @@ public class Client {
     private String homeNo;
     private String zipCode;
     private String timeZone;
+    @OneToOne(mappedBy = "client",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private ShoppingCart shoppingCart;
     private String password;
 
     public Client() {
@@ -32,7 +35,8 @@ public class Client {
                   String homeNo,
                   String zipCode,
                   String timeZone,
-                  String password) {
+                  String password,
+                  ShoppingCart shoppingCart) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -44,6 +48,7 @@ public class Client {
         this.zipCode = zipCode;
         this.timeZone = timeZone;
         this.password = password;
+        this.shoppingCart = shoppingCart;
     }
 
     public Long getId() {
@@ -140,5 +145,32 @@ public class Client {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
+    }
+
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber=" + phoneNumber +
+                ", country='" + country + '\'' +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", homeNo='" + homeNo + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                ", timeZone='" + timeZone + '\'' +
+                ", shoppingCartId=" + shoppingCart.getId() + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

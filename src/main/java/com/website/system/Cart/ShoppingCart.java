@@ -3,6 +3,7 @@ package com.website.system.Cart;
 import com.website.system.Client.Client;
 import com.website.system.Product.Product;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Fetch;
 
 import java.util.List;
@@ -52,5 +53,14 @@ public class ShoppingCart {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    @Override
+    public String toString() {
+        return "ShoppingCart{" +
+                "id=" + id +
+                ", client=" + client +
+                ", products=" + products +
+                '}';
     }
 }
