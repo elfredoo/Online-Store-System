@@ -1,6 +1,7 @@
 package com.website.system.Product.DietSupplement;
 
 import com.website.system.Product.Product;
+import com.website.system.Product.ProductType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import org.hibernate.mapping.Property;
@@ -17,8 +18,8 @@ public class DietSupplement extends Product {
 
     }
 
-    public DietSupplement(String name, double price, int quantity, Set<Ingredient> ingredients, String properties) {
-        super(name, price, quantity);
+    public DietSupplement(String name, double price, int quantity, ProductType type, Set<Ingredient> ingredients, String properties) {
+        super(name, price, quantity, type);
         this.ingredients = ingredients;
         this.properties = properties;
     }

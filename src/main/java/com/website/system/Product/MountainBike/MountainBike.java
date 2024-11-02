@@ -1,6 +1,7 @@
 package com.website.system.Product.MountainBike;
 
 import com.website.system.Product.Product;
+import com.website.system.Product.ProductType;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -14,8 +15,8 @@ public class MountainBike extends Product {
     public MountainBike() {
     }
 
-    public MountainBike(String name, double price, int quantity, List<BikeConfiguration> bikeConfigurations) {
-        super(name, price, quantity);
+    public MountainBike(String name, double price, int quantity, ProductType type, List<BikeConfiguration> bikeConfigurations) {
+        super(name, price, quantity, type);
         this.bikeConfigurations = bikeConfigurations;
     }
 }

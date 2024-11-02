@@ -1,6 +1,7 @@
 package com.website.system.Product.SportShoe;
 
 import com.website.system.Product.Product;
+import com.website.system.Product.ProductType;
 import jakarta.persistence.*;
 import org.hibernate.engine.jdbc.Size;
 
@@ -15,10 +16,11 @@ public class SportShoe extends Product {
     public SportShoe() {
     }
 
-    public SportShoe(String name, double price, int quantity, List<ShoeSize> availableShoeSizes) {
-        super(name, price, quantity);
+    public SportShoe(String name, double price, int quantity, ProductType type, List<ShoeSize> availableShoeSizes) {
+        super(name, price, quantity, type);
         this.availableShoeSizes = availableShoeSizes;
     }
+
 
     public List<ShoeSize> getAvailableShoeSizes() {
         return availableShoeSizes;

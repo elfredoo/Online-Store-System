@@ -1,6 +1,7 @@
 package com.website.system.Product.WinterJacket;
 
 import com.website.system.Product.Product;
+import com.website.system.Product.ProductType;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -14,8 +15,8 @@ public class WinterJacket extends Product {
     public WinterJacket() {
     }
 
-    public WinterJacket(String name, double price, int quantity, List<Features> features) {
-        super(name, price, quantity);
+    public WinterJacket(String name, double price, int quantity, ProductType type, List<Features> features) {
+        super(name, price, quantity, type);
         this.features = features;
     }
 

@@ -1,6 +1,7 @@
 package com.website.system.Product.BabyClothes;
 
 import com.website.system.Product.Product;
+import com.website.system.Product.ProductType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -15,8 +16,8 @@ public class BabyClothes extends Product {
 
     }
 
-    public BabyClothes(String name, double price, int quantity, double babyHeight, Season season) {
-        super(name, price, quantity);
+    public BabyClothes(String name, double price, int quantity, ProductType productType, double babyHeight, Season season) {
+        super(name, price, quantity, productType);
         this.babyHeight = babyHeight;
         this.season = season;
     }

@@ -1,6 +1,7 @@
 package com.website.system.Product.Laptop;
 
 import com.website.system.Product.Product;
+import com.website.system.Product.ProductType;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -15,8 +16,8 @@ public class Laptop extends Product {
 
     }
 
-    public Laptop(String name, double price, int quantity, List<LaptopConfiguration> configuration) {
-        super(name, price, quantity);
+    public Laptop(String name, double price, int quantity, ProductType productType, List<LaptopConfiguration> configuration) {
+        super(name, price, quantity, productType);
         this.configuration = configuration;
     }
 }

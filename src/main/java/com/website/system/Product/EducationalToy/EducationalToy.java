@@ -1,6 +1,7 @@
 package com.website.system.Product.EducationalToy;
 
 import com.website.system.Product.Product;
+import com.website.system.Product.ProductType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 
@@ -16,13 +17,8 @@ public class EducationalToy extends Product {
     public EducationalToy() {
     }
 
-    public EducationalToy(String name,
-                          double price,
-                          int quantity,
-                          int minAge,
-                          int maxAge,
-                          Set<EducationalPurpose> educationalPurposes) {
-        super(name, price, quantity);
+    public EducationalToy(String name, double price, int quantity, ProductType productType, int minAge, int maxAge, Set<EducationalPurpose> educationalPurposes) {
+        super(name, price, quantity, productType);
         this.minAge = minAge;
         this.maxAge = maxAge;
         this.educationalPurposes = educationalPurposes;
