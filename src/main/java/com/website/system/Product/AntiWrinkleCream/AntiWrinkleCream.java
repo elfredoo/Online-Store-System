@@ -36,4 +36,11 @@ public class AntiWrinkleCream extends Product {
         this.skinType = skinType;
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + ", AntiWrinkleCream{" +
+                "ageGroup=" + ageGroup +
+                ", skinType=" + skinType +
+                '}';
+    }
 }
