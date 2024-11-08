@@ -14,6 +14,8 @@ import com.website.system.product.dto.ProductDtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -35,11 +37,11 @@ public class OrderManager {
     double calculateTotalPrice(ShoppingCartDto shoppingCartDto) {
         ShoppingCart cart = shoppingCartDtoMapper.map(shoppingCartDto);
         if (cart.getProducts().isEmpty()) return 0;
-        double totalPrice = 0;
+        BigDecimal totalPrice = BigDecimal.ZERO;
         for (Product product : cart.getProducts()) {
-            totalPrice+=product.getPrice();
+            totalPrice = totalPrice.add(BigDecimal.valueOf(product.getPrice()));
         }
-        return totalPrice;
+        return totalPrice.setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
     public OrderDto getOrderById(Long id) {

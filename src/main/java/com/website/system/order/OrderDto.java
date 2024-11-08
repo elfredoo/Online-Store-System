@@ -31,10 +31,6 @@ public class OrderDto {
 
     @Override
     public String toString() {
-        return "OrderDto{" +
-                "id=" + id +
-                ", totalPrice=" + totalPrice +
-                ", orderStatus=" + orderStatus +
-                '}';
+        return id + ". totalPrice=" + totalPrice + "zł, orderStatus=" + orderStatus;
     }
 }

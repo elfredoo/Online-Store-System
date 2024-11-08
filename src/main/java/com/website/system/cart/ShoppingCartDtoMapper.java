@@ -28,10 +28,12 @@ public class ShoppingCartDtoMapper {
         ShoppingCartDto dto = new ShoppingCartDto();
         dto.setId(shoppingCart.getId());
         dto.setClientId(shoppingCart.getClient().getId());
-        dto.setProductsIds(shoppingCart.getProducts()
-                .stream()
-                .map(Product::getId)
-                .toList());
+        if (shoppingCart.getProducts() != null) {
+            dto.setProductsIds(shoppingCart.getProducts()
+                    .stream()
+                    .map(Product::getId)
+                    .toList());
+        }
         return dto;
     }
 

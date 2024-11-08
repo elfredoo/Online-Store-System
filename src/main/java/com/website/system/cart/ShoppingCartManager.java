@@ -1,5 +1,6 @@
 package com.website.system.cart;
 
+import com.website.system.client.Client;
 import com.website.system.product.ProductManager;
 import com.website.system.product.ProductNotFoundException;
 import com.website.system.product.datamodel.Product;
@@ -26,6 +27,13 @@ public class ShoppingCartManager {
         this.shoppingCartDtoMapper = shoppingCartDtoMapper;
         this.shoppingCartRepository = shoppingCartRepository;
         this.productManager = productManager;
+    }
+
+    public ShoppingCartDto createShoppingCart(Client client){
+        ShoppingCart shoppingCart = new ShoppingCart();
+        shoppingCart.setClient(client);
+        ShoppingCart savedShoppingCart = shoppingCartRepository.save(shoppingCart);
+        return shoppingCartDtoMapper.map(savedShoppingCart);
     }
 
     @Transactional

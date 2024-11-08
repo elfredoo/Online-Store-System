@@ -1,6 +1,7 @@
 package com.website.system.product;
 
 import com.website.system.product.datamodel.Product;
+import com.website.system.product.datamodel.ProductType;
 import com.website.system.product.dto.ProductDto;
 import com.website.system.product.dto.ProductDtoMapper;
 import org.slf4j.Logger;
@@ -42,6 +43,17 @@ public class ProductManager {
 
     public Optional<Product> getProductById(Long id) {
         return productRepository.findById(id);
+    }
+
+    public List<ProductDto> getAllProductsOfType(ProductType productType){
+        Iterable<Product> all = productRepository.findAll();
+        List<ProductDto> productDtos = new ArrayList<>();
+        for(Product product : all){
+            if (product.getProductType().equals(productType)){
+                productDtos.add(productDtoMapper.map(product));
+            }
+        }
+        return productDtos;
     }
 
     public List<ProductDto> getAllProducts() {

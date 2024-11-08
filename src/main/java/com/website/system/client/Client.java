@@ -51,6 +51,30 @@ public class Client {
         this.shoppingCart = shoppingCart;
     }
 
+    public Client(String firstName,
+                  String lastName,
+                  String email,
+                  int phoneNumber,
+                  String country,
+                  String city,
+                  String street,
+                  String homeNo,
+                  String zipCode,
+                  String timeZone,
+                  String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.country = country;
+        this.city = city;
+        this.street = street;
+        this.homeNo = homeNo;
+        this.zipCode = zipCode;
+        this.timeZone = timeZone;
+        this.password = password;
+    }
+
     public Long getId() {
         return id;
     }

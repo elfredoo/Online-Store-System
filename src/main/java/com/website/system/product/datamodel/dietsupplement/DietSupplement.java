@@ -2,6 +2,7 @@ package com.website.system.product.datamodel.dietsupplement;
 
 import com.website.system.product.datamodel.Product;
 import com.website.system.product.datamodel.ProductType;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 
@@ -9,7 +10,7 @@ import java.util.Set;
 
 @Entity
 public class DietSupplement extends Product {
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private Set<Ingredient> ingredients;
     private String properties;
 
