@@ -18,18 +18,18 @@ public class ClientDtoMapper {
         this.clientRepository = clientRepository;
     }
 
-    ClientDto map(Client client) {
+    public ClientDto map(Client client) {
         ClientDto clientDto = new ClientDto();
         clientDto.setId(client.getId());
         clientDto.setFirstName(client.getFirstName());
         clientDto.setLastName(client.getLastName());
         clientDto.setTimeZone(client.getTimeZone());
-        clientDto.setShoppingCartId(client.getShoppingCart().getId());
+        if (client.getShoppingCart() != null) clientDto.setShoppingCartId(client.getShoppingCart().getId());
         clientDto.setPassword(client.getPassword());
         return clientDto;
     }
 
-    Client map(ClientDto clientDto) {
+    public Client map(ClientDto clientDto) {
         Optional<Client> clientById = clientRepository.findById(clientDto.getId());
         if (clientById.isPresent()) {
             return clientById.get();

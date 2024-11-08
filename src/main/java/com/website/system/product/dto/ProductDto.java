@@ -2,7 +2,7 @@ package com.website.system.product.dto;
 
 import com.website.system.product.datamodel.ProductType;
 
-public class ProductDto {
+public class ProductDto implements Comparable<ProductDto> {
     private Long id;
     private String name;
     private double price;
@@ -57,12 +57,12 @@ public class ProductDto {
     }
 
     @Override
+    public int compareTo(ProductDto other) {
+        return this.id.compareTo(other.id);
+    }
+
+    @Override
     public String toString() {
-        return "ProductDto{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", productType=" + productType +
-                '}';
+        return id + "." + name + " " + price + "zł " + productType;
     }
 }

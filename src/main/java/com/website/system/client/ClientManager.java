@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class ClientManager {
@@ -15,9 +16,9 @@ public class ClientManager {
         this.clientRepository = clientRepository;
     }
 
-    public void addClient(ClientDto dto) {
-        Client client = clientDtoMapper.map(dto);
-        clientRepository.save(client);
+    public ClientDto addClient(Client client) {
+        Client savedClient = clientRepository.save(client);
+        return clientDtoMapper.map(savedClient);
     }
 
     public void removeClient(Long id) {
@@ -28,6 +29,15 @@ public class ClientManager {
         Client client = clientRepository.findById(id).orElseThrow(ClientNotFoundException::new);
         return clientDtoMapper.map(client);
     }
+
+    public ClientDto validateData(String email, String password){
+        Client client = clientRepository.findByEmail(email).orElseThrow(ClientNotFoundException::new);
+        if (client.getPassword().equals(password)){
+            return clientDtoMapper.map(client);
+        }
+        throw new InvalidPasswordException();
+    }
+
 
     @Transactional
     public ClientDto updateClient(Long id, ClientDto clientDto){

@@ -4,9 +4,12 @@ import com.website.system.product.datamodel.Product;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDTrueTypeFont;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -17,12 +20,18 @@ public class InvoicePdfSaver {
 
     public void saveInvoiceToPdf(Invoice invoice, String filePath) {
         List<Product> invoiceProducts = invoice.getProducts();
+
+        File fontFile = new File("src/main/resources/fonts/DejaVuSans-Bold.ttf");
+
         try(PDDocument document = new PDDocument()){
             PDPage page = new PDPage();
             document.addPage(page);
+
+            PDType0Font font = PDType0Font.load(document, fontFile);
+
             PDPageContentStream contentStream = new PDPageContentStream(document, page);
             contentStream.beginText();
-            contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
+            contentStream.setFont(font, 12);
             contentStream.newLineAtOffset(100, 700);
 
             contentStream.showText("Invoice No: "+invoice.getInvoiceNumber());

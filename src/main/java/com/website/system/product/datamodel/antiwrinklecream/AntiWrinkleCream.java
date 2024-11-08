@@ -9,7 +9,7 @@ import jakarta.persistence.*;
 public class AntiWrinkleCream extends Product {
     private int ageGroup;
     @Enumerated(EnumType.STRING)
-    private com.website.system.product.antiwrinklecream.SkinType skinType;
+    private SkinType skinType;
 
     public AntiWrinkleCream() {
 
