@@ -3,6 +3,8 @@ package com.website.system.client;
 import com.website.system.cart.ShoppingCart;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Client {
     @Id
@@ -35,8 +37,8 @@ public class Client {
                   String homeNo,
                   String zipCode,
                   String timeZone,
-                  String password,
-                  ShoppingCart shoppingCart) {
+                  ShoppingCart shoppingCart,
+                  String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -47,8 +49,8 @@ public class Client {
         this.homeNo = homeNo;
         this.zipCode = zipCode;
         this.timeZone = timeZone;
-        this.password = password;
         this.shoppingCart = shoppingCart;
+        this.password = password;
     }
 
     public Client(String firstName,
@@ -193,7 +195,7 @@ public class Client {
                 ", homeNo='" + homeNo + '\'' +
                 ", zipCode='" + zipCode + '\'' +
                 ", timeZone='" + timeZone + '\'' +
-                ", shoppingCartId=" + shoppingCart.getId() + '\'' +
+                ", shoppingCart=" + shoppingCart +
                 ", password='" + password + '\'' +
                 '}';
     }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class InvoiceGenerator {
     public Invoice generateInvoice(Order order) {
         String invoiceNumber = "INV-"+order.getId();
-        Invoice invoice = new Invoice(invoiceNumber, order.getClient(), order.getShoppingCart().getProducts(), 0.23);
+        Invoice invoice = new Invoice(invoiceNumber, order.getClient(), order.getProducts(), 0.23);
         return invoice;
     }
 }
