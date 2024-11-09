@@ -29,6 +29,17 @@ public class ShoppingCartManager {
         this.productManager = productManager;
     }
 
+    @Transactional
+    public void clearShoppingCart(Long id) {
+        ShoppingCart shoppingCart = shoppingCartRepository.findById(id).orElseThrow(ShoppingCartNotFoundException::new);
+        shoppingCart.getProducts().clear();
+        shoppingCartRepository.save(shoppingCart);
+    }
+
+    public void deleteShoppingCart(Long id){
+        shoppingCartRepository.deleteById(id);
+    }
+
     public ShoppingCartDto createShoppingCart(Client client){
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setClient(client);

@@ -1,5 +1,6 @@
 package com.website.system.invoice;
 
+import com.website.system.order.product.OrderProduct;
 import com.website.system.product.datamodel.Product;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -14,12 +15,13 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class InvoicePdfSaver {
 
     public void saveInvoiceToPdf(Invoice invoice, String filePath) {
-        List<Product> invoiceProducts = invoice.getProducts();
+        Set<OrderProduct> invoiceProducts = invoice.getProducts();
 
         File fontFile = new File("src/main/resources/fonts/DejaVuSans-Bold.ttf");
 
@@ -43,14 +45,19 @@ public class InvoicePdfSaver {
             contentStream.showText("Products:");
             contentStream.newLineAtOffset(0,-15);
 
-            for (int i = 0; i < invoiceProducts.size(); i++) {
-                contentStream.showText(i+1 +". " + invoiceProducts.get(i).getName() + " " + invoiceProducts.get(i).getPrice()+"PLN");
+            int lineNumber = 1;
+            for (OrderProduct invoiceProduct : invoiceProducts) {
+                contentStream.showText(lineNumber + ". "+invoiceProduct.getProduct().getName()+
+                        " "+invoiceProduct.getPrice()+" PLN, ilość: "+invoiceProduct.getQuantity());
                 contentStream.newLineAtOffset(0,-15);
+                lineNumber++;
             }
 
             contentStream.newLineAtOffset(0,-30);
-            BigDecimal grossTotal = BigDecimal.valueOf(invoice.getGrossTotal()).setScale(2, RoundingMode.HALF_UP);
-            contentStream.showText("Total: "+grossTotal+" PLN");
+            contentStream.showText(String.format("Gross total: %.2f PLN", invoice.getGrossTotal()));
+            contentStream.newLineAtOffset(0,-15);
+
+            contentStream.showText("Net total: "+invoice.getNetTotal()+" PLN");
             contentStream.endText();
 
             contentStream.close();

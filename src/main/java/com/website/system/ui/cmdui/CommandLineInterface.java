@@ -1,6 +1,5 @@
 package com.website.system.ui.cmdui;
 
-import com.website.system.cart.ShoppingCart;
 import com.website.system.cart.ShoppingCartDto;
 import com.website.system.cart.ShoppingCartDtoMapper;
 import com.website.system.cart.ShoppingCartManager;
@@ -12,7 +11,6 @@ import com.website.system.product.ProductManager;
 import com.website.system.product.ProductNotFoundException;
 import com.website.system.product.datamodel.Product;
 import com.website.system.product.datamodel.ProductType;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -74,33 +72,7 @@ public class CommandLineInterface {
                     invalidOption();
                     break;
             }
-        }while (option != 3 || option != 0);
-    }
-
-    private void finalizeShopping() {
-        int option = -1;
-        do {
-            System.out.println("Wybierz akcję którą chcesz wykonać:");
-            System.out.println(0+" - wyjście");
-            System.out.println(1+" - przeglądaj koszyk");
-            System.out.println(2+" - złóż zamówienie");
-            option = sc.nextInt();
-            sc.nextLine();
-            switch (option) {
-                case 0:
-                    exit();
-                    break;
-                case 1:
-                    viewCart();
-                    break;
-                case 2:
-                    placeOrder();
-                    break;
-                default:
-                    invalidOption();
-            }
-        }while(option != 0 || option != 2);
-
+        }while (option != 0);
     }
 
     private void placeOrder() {

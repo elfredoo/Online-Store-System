@@ -2,9 +2,15 @@ package com.website.system.order;
 
 import com.website.system.cart.ShoppingCart;
 import com.website.system.client.Client;
+import com.website.system.order.product.OrderProduct;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "orders")
@@ -12,17 +18,17 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_id", nullable = false)
     private Client client;
-    @OneToOne
-    private ShoppingCart shoppingCart;
+    @OneToMany
+    private Set<OrderProduct> products = new HashSet<>();
     private double totalPrice;
-    private LocalDateTime orderDate;
+    private ZonedDateTime orderDate;
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
     public Order() {
-        this.orderDate = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -41,12 +47,12 @@ public class Order {
         this.client = client;
     }
 
-    public ShoppingCart getShoppingCart() {
-        return shoppingCart;
+    public Set<OrderProduct> getProducts() {
+        return products;
     }
 
-    public void setShoppingCart(ShoppingCart shoppingCart) {
-        this.shoppingCart = shoppingCart;
+    public void setProducts(Set<OrderProduct> products) {
+        this.products = products;
     }
 
     public double getTotalPrice() {
@@ -57,11 +63,11 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    public LocalDateTime getOrderDate() {
+    public ZonedDateTime getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(LocalDateTime orderDate) {
+    public void setOrderDate(ZonedDateTime orderDate) {
         this.orderDate = orderDate;
     }
 
@@ -78,7 +84,7 @@ public class Order {
         return "Order{" +
                 "id=" + id +
                 ", client=" + client +
-                ", shoppingCart=" + shoppingCart +
+                ", products=" + products +
                 ", totalPrice=" + totalPrice +
                 ", orderDate=" + orderDate +
                 ", orderStatus=" + orderStatus +
