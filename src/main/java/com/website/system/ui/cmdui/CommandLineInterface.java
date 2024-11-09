@@ -84,7 +84,7 @@ public class CommandLineInterface {
             System.out.println(orderDto);
             System.out.println("Dziękujemy za zakupy "+client.getFirstName()+"!");
         }catch (DataIntegrityViolationException e){
-            System.err.println("Masz już złożone jedno zamówienie "+client.getFirstName());
+            System.err.println("Wystąpił błąd podczas składania zamówienia.");
         }
 
     }

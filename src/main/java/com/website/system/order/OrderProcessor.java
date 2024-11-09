@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -30,7 +31,6 @@ public class OrderProcessor {
     private final ShoppingCartManager shoppingCartManager;
     private final ProductDtoMapper productDtoMapper;
     private final ShoppingCartDtoMapper shoppingCartDtoMapper;
-    private final OrderManager orderManager;
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
     private final ProductManager productManager;
@@ -43,7 +43,6 @@ public class OrderProcessor {
     public OrderProcessor(ShoppingCartManager shoppingCartManager,
                           ProductDtoMapper productDtoMapper,
                           ShoppingCartDtoMapper shoppingCartDtoMapper,
-                          OrderManager orderManager,
                           OrderRepository orderRepository,
                           ProductRepository productRepository,
                           ProductManager productManager,
@@ -53,7 +52,6 @@ public class OrderProcessor {
         this.shoppingCartManager = shoppingCartManager;
         this.productDtoMapper = productDtoMapper;
         this.shoppingCartDtoMapper = shoppingCartDtoMapper;
-        this.orderManager = orderManager;
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
         this.productManager = productManager;
@@ -74,13 +72,16 @@ public class OrderProcessor {
 
         String clientTimeZone = shoppingCart.getClient().getTimeZone();
         ZoneId zoneId = ZoneId.of(clientTimeZone);
-        System.out.println("Client's time zone: " + clientTimeZone);
-        System.out.println(ZonedDateTime.now(zoneId));
-
+        System.out.println("Strefa czasowa użytkownika: " + clientTimeZone);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        ZonedDateTime now = ZonedDateTime.now(zoneId);
+        String nowFormatted = now.format(formatter);
+        System.out.println("Data złożenia zamówienia: "+nowFormatted);
+        
         order.setClient(shoppingCart.getClient());
         order.setProducts(mapShoppingCartToOrderProducts(shoppingCart, order));
         order.setTotalPrice(calculateTotalPrice(order.getProducts()));
-        order.setOrderDate(ZonedDateTime.now(zoneId));
+        order.setOrderDate(LocalDateTime.now(zoneId));
         order.setOrderStatus(OrderStatus.PROCESSING);
         Order savedOrder = orderRepository.save(order);
         OrderDto orderDto = orderDtoMapper.map(order);
@@ -101,10 +102,8 @@ public class OrderProcessor {
     private double calculateTotalPrice(Set<OrderProduct> products) {
         double totalPrice = 0.0;
         for (OrderProduct product : products) {
-            System.out.println("Product price: " + product.getPrice() + ", Quantity: " + product.getQuantity());
             totalPrice += product.getPrice() * product.getQuantity();
         }
-        System.out.println("Calculated total price: " + totalPrice);
         return totalPrice;
     }
 

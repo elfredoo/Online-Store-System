@@ -24,11 +24,12 @@ public class Order {
     @OneToMany
     private Set<OrderProduct> products = new HashSet<>();
     private double totalPrice;
-    private ZonedDateTime orderDate;
+    private LocalDateTime orderDate;
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
     public Order() {
+        this.orderDate = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -63,11 +64,11 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    public ZonedDateTime getOrderDate() {
+    public LocalDateTime getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(ZonedDateTime orderDate) {
+    public void setOrderDate(LocalDateTime orderDate) {
         this.orderDate = orderDate;
     }
 
