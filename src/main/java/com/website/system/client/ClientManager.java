@@ -1,10 +1,10 @@
 package com.website.system.client;
 
+import jakarta.validation.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ClientManager {
@@ -30,7 +30,9 @@ public class ClientManager {
         return clientDtoMapper.map(client);
     }
 
-    public ClientDto validateData(String email, String password){
+
+
+    public ClientDto verifyLoginData(String email, String password){
         Client client = clientRepository.findByEmail(email).orElseThrow(ClientNotFoundException::new);
         if (client.getPassword().equals(password)){
             return clientDtoMapper.map(client);
@@ -54,4 +56,19 @@ public class ClientManager {
         return clientDtoMapper.map(foundClient);
     }
 
+    public Client validateData(Client potentialClient) {
+        Validator validator;
+        try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+            validator = factory.getValidator();
+        }
+
+        Set<ConstraintViolation<Client>> violations = validator.validate(potentialClient);
+
+        if (violations.isEmpty()) {
+            clientRepository.findByEmail(potentialClient.getEmail()).ifPresent(client -> {throw new EmailAlreadyTakenException();});
+            return potentialClient;
+        }else {
+            throw new ConstraintViolationException(violations);
+        }
+    }
 }

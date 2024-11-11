@@ -2,6 +2,9 @@ package com.website.system.client;
 
 import com.website.system.cart.ShoppingCart;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 import java.util.List;
 
@@ -10,18 +13,29 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
     private String firstName;
+    @NotNull
     private String lastName;
+    @Email @NotNull
     private String email;
-    private int phoneNumber;
+    @NotNull @Pattern(regexp = "\\d{9,15}")
+    private String phoneNumber;
+    @NotNull
     private String country;
+    @NotNull
     private String city;
+    @NotNull
     private String street;
+    @NotNull
     private String homeNo;
+    @NotNull @Pattern(regexp = "^[A-Za-z0-9_-]{3,10}$")
     private String zipCode;
+    @NotNull @Pattern(regexp = "[a-zA-Z0-9_]+/[a-zA-Z0-9_]+")
     private String timeZone;
     @OneToOne(mappedBy = "client",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private ShoppingCart shoppingCart;
+    @NotNull
     private String password;
 
     public Client() {
@@ -30,7 +44,7 @@ public class Client {
     public Client(String firstName,
                   String lastName,
                   String email,
-                  int phoneNumber,
+                  String phoneNumber,
                   String country,
                   String city,
                   String street,
@@ -56,7 +70,7 @@ public class Client {
     public Client(String firstName,
                   String lastName,
                   String email,
-                  int phoneNumber,
+                  String phoneNumber,
                   String country,
                   String city,
                   String street,
@@ -109,11 +123,11 @@ public class Client {
         this.email = email;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

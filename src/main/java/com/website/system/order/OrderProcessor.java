@@ -119,8 +119,6 @@ public class OrderProcessor {
         for (Product product : products) {
             if (product.getQuantity() <= 0) {
                 throw new ProductOutOfStockException();
-            } else if (product.getQuantity() <= 1) {
-                productManager.deleteProduct(product.getId());
             } else{
                 minusQuantity(product);
                 productRepository.save(product);

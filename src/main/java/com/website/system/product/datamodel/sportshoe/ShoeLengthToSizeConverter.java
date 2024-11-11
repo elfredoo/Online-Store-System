@@ -1,4 +1,4 @@
-package com.website.system.product.sportshoe;
+package com.website.system.product.datamodel.sportshoe;
 
 import java.util.HashMap;
 import java.util.Map;
