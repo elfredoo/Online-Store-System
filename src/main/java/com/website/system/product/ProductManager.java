@@ -1,16 +1,17 @@
 package com.website.system.product;
 
+import com.website.system.client.Client;
 import com.website.system.product.datamodel.Product;
 import com.website.system.product.datamodel.ProductType;
 import com.website.system.product.dto.ProductDto;
 import com.website.system.product.dto.ProductDtoMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jakarta.validation.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ProductManager {
@@ -45,15 +46,15 @@ public class ProductManager {
         return productRepository.findById(id);
     }
 
-    public List<ProductDto> getAllProductsOfType(ProductType productType){
+    public List<Product> getAllProductsOfTypeIfAvailable(ProductType productType){
         Iterable<Product> all = productRepository.findAll();
-        List<ProductDto> productDtos = new ArrayList<>();
+        List<Product> products = new ArrayList<>();
         for(Product product : all){
-            if (product.getProductType().equals(productType)){
-                productDtos.add(productDtoMapper.map(product));
+            if (product.getProductType().equals(productType) && product.getQuantity() > 0){
+                products.add(product);
             }
         }
-        return productDtos;
+        return products;
     }
 
     public List<ProductDto> getAllProducts() {
@@ -75,23 +76,4 @@ public class ProductManager {
         }
         return Optional.empty();
     }
-
-    //-------------->>probably will be deleted<<-----------------------
-
-//    @Transactional
-//    public void placeOrder(List<ProductDto> productDtos) {
-//        for (T product : products) {
-//            if(product.getQuantity() <= 1) {
-//                productRepository.delete(product);
-//            }
-//            else{
-//                minusQuantity(product);
-//                productRepository.save(product);
-//            }
-//        }
-//    }
-//
-//    private <T extends Product> void minusQuantity(T product) {
-//        product.setQuantity(product.getQuantity() - 1);
-//    }
 }

@@ -39,8 +39,8 @@ public class AntiWrinkleCream extends Product {
 
     @Override
     public String toString() {
-        return super.toString() + ", AntiWrinkleCream{" +
-                "ageGroup=" + ageGroup +
+        return super.toString().replace("}", "") +
+                ", ageGroup=" + ageGroup +
                 ", skinType=" + skinType +
                 '}';
     }
