@@ -4,10 +4,7 @@ import com.website.system.cart.ShoppingCartDto;
 import com.website.system.cart.ShoppingCartDtoMapper;
 import com.website.system.cart.ShoppingCartManager;
 import com.website.system.client.*;
-import com.website.system.order.OrderDto;
-import com.website.system.order.OrderManager;
-import com.website.system.order.OrderProcessor;
-import com.website.system.order.ProductOutOfStockException;
+import com.website.system.order.*;
 import com.website.system.product.ProductManager;
 import com.website.system.product.ProductNotFoundException;
 import com.website.system.product.datamodel.Product;
@@ -20,10 +17,13 @@ import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class CommandLineInterface {
     private final OrderManager orderManager;
+    private final OrderService orderService;
     private final OrderProcessor orderProcessor;
     ClientDto client;
     private final ProductManager productManager;
@@ -33,7 +33,7 @@ public class CommandLineInterface {
     private final ClientDtoMapper clientDtoMapper;
     private final ShoppingCartManager shoppingCartManager;
 
-    public CommandLineInterface(Scanner sc, ClientManager clientManager, ClientDtoMapper clientDtoMapper, ShoppingCartManager shoppingCartManager, ProductManager productManager, ShoppingCartDtoMapper shoppingCartDtoMapper, OrderManager orderManager, OrderProcessor orderProcessor) {
+    public CommandLineInterface(Scanner sc, ClientManager clientManager, ClientDtoMapper clientDtoMapper, ShoppingCartManager shoppingCartManager, ProductManager productManager, ShoppingCartDtoMapper shoppingCartDtoMapper, OrderManager orderManager, OrderService orderService, OrderProcessor orderProcessor) {
         this.sc = sc;
         this.clientManager = clientManager;
         this.clientDtoMapper = clientDtoMapper;
@@ -41,6 +41,7 @@ public class CommandLineInterface {
         this.productManager = productManager;
         this.shoppingCartDtoMapper = shoppingCartDtoMapper;
         this.orderManager = orderManager;
+        this.orderService = orderService;
         this.orderProcessor = orderProcessor;
     }
 
@@ -91,7 +92,7 @@ public class CommandLineInterface {
     private void placeOrder() {
         Long shoppingCartId = client.getShoppingCartId();
         try {
-            OrderDto orderDto = orderProcessor.placeOrder(shoppingCartId);
+            OrderDto orderDto = orderProcessor.processOrder(shoppingCartId).get();
             System.out.println("Zamówienie zostało złożone.");
             System.out.println("Podsumowanie:");
             System.out.println(orderDto);
@@ -100,6 +101,9 @@ public class CommandLineInterface {
             System.err.println(e.getMessage());
             System.out.println("W twoim koszyku znajdują się produkty, które nie powinny się tam znaleźć, za chwilę nastąpi wyczyszczenie Twojego koszyka.");
             shoppingCartManager.clearShoppingCart(shoppingCartId);
+        } catch (ExecutionException | InterruptedException e) {
+            System.err.println(e.getMessage());
+            System.out.println("Nie udało się złożyć zamówienia");
         }
 
     }
@@ -181,7 +185,6 @@ public class CommandLineInterface {
                 option = -2;
             }catch (ProductOutOfStockException | ProductNotFoundException e) {
                 System.err.println(e.getMessage());
-                sc.nextLine();
                 option = -2;
             }
         }while(option != 0);
