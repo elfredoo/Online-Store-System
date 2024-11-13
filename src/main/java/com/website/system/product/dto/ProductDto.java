@@ -1,12 +1,17 @@
 package com.website.system.product.dto;
 
+import com.website.system.discount.Discount;
 import com.website.system.product.datamodel.ProductType;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class ProductDto implements Comparable<ProductDto> {
     private Long id;
     private String name;
     private double price;
     private ProductType productType;
+    private Discount discount;
 
     public ProductDto() {
     }
@@ -61,8 +66,28 @@ public class ProductDto implements Comparable<ProductDto> {
         return this.id.compareTo(other.id);
     }
 
+    public Discount getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Discount discount) {
+        this.discount = discount;
+    }
+
+    private double calcPriceAfterDiscount(){
+        BigDecimal price = BigDecimal.valueOf(getPrice());
+        BigDecimal discountPercentage = BigDecimal.valueOf(discount.getPercentage());
+        BigDecimal valueToSubtract = price.multiply(discountPercentage);
+        BigDecimal amountAfterDiscount = price.subtract(valueToSubtract).setScale(2, RoundingMode.HALF_UP);
+        return amountAfterDiscount.doubleValue();
+    }
+
     @Override
     public String toString() {
-        return id + "." + name + " " + price + "zł " + productType;
+        String baseString = id + "." + name + " " + price + "zł " + productType;
+        if (discount !=null){
+            baseString += " <- produkt objęty promocją "+discount.getName()+" o wartości: "+discount.getPercentage()+"%"+" cena po rabacie: "+calcPriceAfterDiscount()+"PLN";
+        }
+        return baseString;
     }
 }

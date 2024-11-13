@@ -7,6 +7,7 @@ import com.website.system.product.dto.ProductDto;
 import com.website.system.product.dto.ProductDtoMapper;
 import jakarta.validation.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,12 +47,12 @@ public class ProductManager {
         return productRepository.findById(id);
     }
 
-    public List<Product> getAllProductsOfTypeIfAvailable(ProductType productType){
+    public List<ProductDto> getAllProductsOfTypeIfAvailable(ProductType productType){
         Iterable<Product> all = productRepository.findAll();
-        List<Product> products = new ArrayList<>();
+        List<ProductDto> products = new ArrayList<>();
         for(Product product : all){
             if (product.getProductType().equals(productType) && product.getQuantity() > 0){
-                products.add(product);
+                products.add(productDtoMapper.map(product));
             }
         }
         return products;
@@ -76,4 +77,47 @@ public class ProductManager {
         }
         return Optional.empty();
     }
+
+//    @Transactional
+//    public void applyDiscount(Long productId, double percentageOfDiscount){
+//        if (percentageOfDiscount <= 0) throw new IllegalArgumentException("Procent rabatu nie może być mniejszy równy zeru!");
+//        Product product = productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
+//        double discountAmount = product.getPrice() * percentageOfDiscount;
+//        double priceAfterDiscount = product.getPrice() - discountAmount;
+//        if(priceAfterDiscount < 0) throw new IllegalArgumentException("Cena po rabacie nie może być mniejsza od zera");
+//        product.setPrice(priceAfterDiscount);
+//        productRepository.save(product);
+//    }
+//
+//    @Transactional
+//    public void applyDiscounts(List<Long> productIds, double percentageOfDiscount){
+//        if (percentageOfDiscount <= 0) throw new IllegalArgumentException("Procent rabatu nie może być mniejszy równy zeru!");
+//
+//        List<Product> products = (List<Product>) productRepository.findAllById(productIds);
+//        if (products.size() != productIds.size()) {
+//            throw new ProductNotFoundException("Niektóre produkty nie zostały znalezione.");
+//        }
+//
+//        for (Product product : products) {
+//            double discountAmount = product.getPrice() * percentageOfDiscount;
+//            double priceAfterDiscount = product.getPrice() - discountAmount;
+//            if (priceAfterDiscount < 0) throw new IllegalArgumentException("Cena po rabacie nie może być mniejsza od zera");
+//            product.setPrice(priceAfterDiscount);
+//        }
+//        productRepository.saveAll(products);
+//    }
+//
+//    @Transactional
+//    public void applyDiscounts(ProductType productType, double percentageOfDiscount){
+//        List<ProductDto> productsOfType = getAllProductsOfTypeIfAvailable(productType);
+//
+//        for (ProductDto product : productsOfType) {
+//            double discountAmount = product.getPrice() * percentageOfDiscount;
+//            double priceAfterDiscount = product.getPrice() - discountAmount;
+//            if (priceAfterDiscount < 0) throw new IllegalArgumentException("Cena po rabacie nie może być mniejsza od zera!");
+//            product.setPrice(priceAfterDiscount);
+//        }
+//        productsOfType.
+//        productRepository.saveAll(productsOfType);
+//    }
 }

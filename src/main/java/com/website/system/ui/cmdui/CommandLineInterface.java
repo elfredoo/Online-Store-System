@@ -22,7 +22,6 @@ import java.util.concurrent.ExecutionException;
 
 @Service
 public class CommandLineInterface {
-    private final OrderManager orderManager;
     private final OrderService orderService;
     private final OrderProcessor orderProcessor;
     ClientDto client;
@@ -33,14 +32,13 @@ public class CommandLineInterface {
     private final ClientDtoMapper clientDtoMapper;
     private final ShoppingCartManager shoppingCartManager;
 
-    public CommandLineInterface(Scanner sc, ClientManager clientManager, ClientDtoMapper clientDtoMapper, ShoppingCartManager shoppingCartManager, ProductManager productManager, ShoppingCartDtoMapper shoppingCartDtoMapper, OrderManager orderManager, OrderService orderService, OrderProcessor orderProcessor) {
+    public CommandLineInterface(Scanner sc, ClientManager clientManager, ClientDtoMapper clientDtoMapper, ShoppingCartManager shoppingCartManager, ProductManager productManager, ShoppingCartDtoMapper shoppingCartDtoMapper, OrderService orderService, OrderProcessor orderProcessor) {
         this.sc = sc;
         this.clientManager = clientManager;
         this.clientDtoMapper = clientDtoMapper;
         this.shoppingCartManager = shoppingCartManager;
         this.productManager = productManager;
         this.shoppingCartDtoMapper = shoppingCartDtoMapper;
-        this.orderManager = orderManager;
         this.orderService = orderService;
         this.orderProcessor = orderProcessor;
     }

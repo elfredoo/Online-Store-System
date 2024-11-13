@@ -1,6 +1,9 @@
 package com.website.system.product.datamodel;
 
+import com.website.system.discount.Discount;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED) // Możesz wybrać strategię, np. SINGLE_TABLE
@@ -13,6 +16,8 @@ public class Product {
     private int quantity;
     @Enumerated(EnumType.STRING)
     private ProductType productType;
+    @ManyToOne
+    private Discount discount;
 
     public Product() {
     }
@@ -62,6 +67,14 @@ public class Product {
 
     public void setProductType(ProductType productType) {
         this.productType = productType;
+    }
+
+    public Discount getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Discount discount) {
+        this.discount = discount;
     }
 
     @Override

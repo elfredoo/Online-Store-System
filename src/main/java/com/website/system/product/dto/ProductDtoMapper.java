@@ -21,6 +21,7 @@ public class ProductDtoMapper {
         productDto.setName(product.getName());
         productDto.setPrice(product.getPrice());
         productDto.setProductType(product.getProductType());
+        if (product.getDiscount()!=null) productDto.setDiscount(product.getDiscount());
         return productDto;
     }
 
@@ -33,6 +34,7 @@ public class ProductDtoMapper {
             product.setName(productDto.getName());
             product.setPrice(productDto.getPrice());
             product.setProductType(productDto.getProductType());
+            if (productDto.getDiscount() != null) product.setDiscount(productDto.getDiscount());
             return product;
         }
     }
