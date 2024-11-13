@@ -6,6 +6,7 @@ import com.website.system.cart.ShoppingCartDtoMapper;
 import com.website.system.cart.ShoppingCartManager;
 import com.website.system.client.Client;
 import com.website.system.client.ClientManager;
+import com.website.system.discount.DiscountManager;
 import com.website.system.invoice.Invoice;
 import com.website.system.invoice.InvoiceGenerator;
 import com.website.system.invoice.InvoicePdfSaver;
@@ -40,6 +41,7 @@ public class OrderService {
     private final InvoicePdfSaver invoicePdfSaver;
     private final OrderProductManager orderProductManager;
     private final ClientManager clientManager;
+    private final DiscountManager discountManager;
 
     public OrderService(ShoppingCartManager shoppingCartManager,
                         ProductDtoMapper productDtoMapper,
@@ -49,7 +51,7 @@ public class OrderService {
                         ProductManager productManager,
                         OrderDtoMapper orderDtoMapper,
                         InvoiceGenerator invoiceGenerator,
-                        InvoicePdfSaver invoicePdfSaver, OrderProductManager orderProductManager, ClientManager clientManager) {
+                        InvoicePdfSaver invoicePdfSaver, OrderProductManager orderProductManager, ClientManager clientManager, DiscountManager discountManager) {
         this.shoppingCartManager = shoppingCartManager;
         this.productDtoMapper = productDtoMapper;
         this.shoppingCartDtoMapper = shoppingCartDtoMapper;
@@ -61,18 +63,20 @@ public class OrderService {
         this.invoicePdfSaver = invoicePdfSaver;
         this.orderProductManager = orderProductManager;
         this.clientManager = clientManager;
-    }
-
-    public CompletableFuture<OrderDto> processOrder(Long shoppingCartId) {
-        return CompletableFuture.supplyAsync(()-> placeOrder(shoppingCartId));
+        this.discountManager = discountManager;
     }
 
     @Transactional
     public OrderDto placeOrder(Long shoppingCartId) {
         ShoppingCartDto shoppingCartDto = shoppingCartManager.getShoppingCart(shoppingCartId);
         ShoppingCart shoppingCart = shoppingCartDtoMapper.map(shoppingCartDto);
+        List<Product> products = shoppingCart.getProducts();
+        products
+                .stream()
+                .filter(product -> product.getDiscount()!=null)
+                .forEach((product)->discountManager.checkForDiscount(product.getDiscount().getId(),product.getId()));
 
-        removeFromStock(shoppingCart.getProducts());
+        removeFromStock(products);
         Order order = new Order();
 
         String clientTimeZone = shoppingCart.getClient().getTimeZone();
@@ -113,10 +117,12 @@ public class OrderService {
     }
 
     private Set<OrderProduct> mapShoppingCartToOrderProducts(ShoppingCart shoppingCart, Order order) {
-        return shoppingCart
+         return shoppingCart
                 .getProducts()
                 .stream()
-                .map((product) ->orderProductManager.map(productDtoMapper.map(product), order))
+                .filter(product -> product.getDiscount()!=null)
+                .map((product)->discountManager.checkForDiscount(product.getDiscount().getId(),product.getId()))
+                .map((product) ->orderProductManager.map(product, order))
                 .collect(Collectors.toSet());
     }
 
