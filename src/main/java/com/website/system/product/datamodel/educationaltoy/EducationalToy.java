@@ -2,6 +2,7 @@ package com.website.system.product.datamodel.educationaltoy;
 
 import com.website.system.product.datamodel.Product;
 import com.website.system.product.datamodel.ProductType;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 
@@ -11,7 +12,7 @@ import java.util.Set;
 public class EducationalToy extends Product {
     private int minAge;
     private int maxAge;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private Set<EducationalPurpose> educationalPurposes;
 
     public EducationalToy() {
@@ -46,5 +47,14 @@ public class EducationalToy extends Product {
 
     public void setEducationalPurposes(Set<EducationalPurpose> educationalPurposes) {
         this.educationalPurposes = educationalPurposes;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString().replace("}", "") +
+                ", minAge=" + minAge +
+                ", maxAge=" + maxAge +
+                ", educationalPurposes=" + educationalPurposes +
+                '}';
     }
 }

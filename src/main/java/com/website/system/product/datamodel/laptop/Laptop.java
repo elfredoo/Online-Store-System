@@ -20,4 +20,11 @@ public class Laptop extends Product {
         super(name, price, quantity, productType);
         this.configuration = configuration;
     }
+
+    @Override
+    public String toString() {
+        return super.toString().replace("}", "") +
+                ", configurations=" + configuration +
+                '}';
+    }
 }

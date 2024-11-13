@@ -84,4 +84,13 @@ public class LaptopConfiguration {
     public void setScreenSize(double screenSize) {
         this.screenSize = screenSize;
     }
+
+    @Override
+    public String toString() {
+        return "Processor: " + processor +
+                ", RAM: " + ram + " GB" +
+                ", Graphics Card: " + graphicsCard +
+                ", Disk: " + diskType + " " + diskCapacity + " GB" +
+                ", Screen: " + screenSize + " inches";
+    }
 }
