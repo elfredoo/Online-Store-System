@@ -53,4 +53,14 @@ public class UserReview {
     public void setCrimeNovel(CrimeNovel crimeNovel) {
         this.crimeNovel = crimeNovel;
     }
+
+    @Override
+    public String toString() {
+        return "UserReview{" +
+                "id=" + id +
+                ", rating=" + rating +
+                ", content='" + content + '\'' +
+                ", crimeNovel=" + crimeNovel +
+                '}';
+    }
 }

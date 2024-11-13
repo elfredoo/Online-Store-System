@@ -16,6 +16,11 @@ public class EducationalPurpose {
     public EducationalPurpose() {
     }
 
+    public EducationalPurpose(String name, List<EducationalToy> educationalToy) {
+        this.name = name;
+        this.educationalToy = educationalToy;
+    }
+
     public EducationalPurpose(Long id, String name, List<EducationalToy> educationalToy) {
         this.id = id;
         this.name = name;

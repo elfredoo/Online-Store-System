@@ -32,4 +32,11 @@ public class CrimeNovel extends Product {
     public void setUserReviews(List<UserReview> userReviews) {
         this.userReviews = userReviews;
     }
+
+    @Override
+    public String toString() {
+        return super.toString().replace("}", "") +
+                ", userReviews=" + (userReviews != null ? userReviews.size() : "0") +
+                '}';
+    }
 }

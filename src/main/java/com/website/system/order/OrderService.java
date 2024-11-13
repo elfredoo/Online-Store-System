@@ -15,6 +15,7 @@ import com.website.system.order.product.OrderProductManager;
 import com.website.system.product.ProductManager;
 import com.website.system.product.ProductRepository;
 import com.website.system.product.datamodel.Product;
+import com.website.system.product.dto.ProductDto;
 import com.website.system.product.dto.ProductDtoMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,10 +24,14 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
+
+import static java.util.Arrays.stream;
 
 @Service
 public class OrderService {
@@ -71,10 +76,6 @@ public class OrderService {
         ShoppingCartDto shoppingCartDto = shoppingCartManager.getShoppingCart(shoppingCartId);
         ShoppingCart shoppingCart = shoppingCartDtoMapper.map(shoppingCartDto);
         List<Product> products = shoppingCart.getProducts();
-        products
-                .stream()
-                .filter(product -> product.getDiscount()!=null)
-                .forEach((product)->discountManager.checkForDiscount(product.getDiscount().getId(),product.getId()));
 
         removeFromStock(products);
         Order order = new Order();
@@ -117,13 +118,20 @@ public class OrderService {
     }
 
     private Set<OrderProduct> mapShoppingCartToOrderProducts(ShoppingCart shoppingCart, Order order) {
-         return shoppingCart
-                .getProducts()
-                .stream()
-                .filter(product -> product.getDiscount()!=null)
-                .map((product)->discountManager.checkForDiscount(product.getDiscount().getId(),product.getId()))
-                .map((product) ->orderProductManager.map(product, order))
-                .collect(Collectors.toSet());
+        List<Product> products = shoppingCart.getProducts();
+        Set<OrderProduct> setToReturn = new HashSet<>();
+        for (Product product : products) {
+            if (product.getDiscount()!= null){
+                ProductDto productDto = discountManager.checkForDiscount(product.getDiscount().getId(), product.getId());
+                OrderProduct orderProduct = orderProductManager.map(productDto, order);
+                setToReturn.add(orderProduct);
+            }else{
+                OrderProduct orderProduct = orderProductManager.map(productDtoMapper.map(product), order);
+                setToReturn.add(orderProduct);
+            }
+        }
+        return setToReturn;
+
     }
 
     private void removeFromStock(List<Product> products) {

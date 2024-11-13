@@ -36,26 +36,6 @@ public class DiscountManager {
     }
 
     @Transactional
-    public void checkForDiscount(Long discountId, List<Long> productIds){
-        Discount discount = discountRepository.findById(discountId)
-                .orElseThrow(DiscountNotFoundException::new);
-        if (discount.getPercentage() <= 0 || discount.getPercentage() > 1) {
-            throw new IllegalArgumentException("Procent rabatu musi być w zakresie od 0 do 1.");
-        }
-        List<Product> products = (List<Product>) productRepository.findAllById(productIds);
-        for (Product product : products) {
-            if (discount.getApplicableProducts().contains(product)) {
-                BigDecimal price = BigDecimal.valueOf(product.getPrice());
-                BigDecimal discountPercentage = BigDecimal.valueOf(discount.getPercentage());
-                BigDecimal valueToSubtract = price.multiply(discountPercentage);
-                BigDecimal amountAfterDiscount = price.subtract(valueToSubtract).setScale(2, RoundingMode.HALF_UP);
-                product.setPrice(amountAfterDiscount.doubleValue());
-            }
-        }
-        productRepository.saveAll(products);
-    }
-
-    @Transactional
     public ProductDto checkForDiscount(Long discountId, Long productId){
         Discount discount = discountRepository.findById(discountId)
                 .orElseThrow(DiscountNotFoundException::new);
