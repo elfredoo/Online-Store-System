@@ -103,7 +103,7 @@ public class OrderService {
         clientManager.addClient(client);
 
         Invoice invoice = invoiceGenerator.generateInvoice(savedOrder);
-        String filePath = "invoices/invoice_"+savedOrder.getId()+".pdf";
+        String filePath = "invoices/invoice_"+invoice.getInvoiceNumber()+".pdf";
         invoicePdfSaver.saveInvoiceToPdf(invoice, filePath);
 
         return orderDto;

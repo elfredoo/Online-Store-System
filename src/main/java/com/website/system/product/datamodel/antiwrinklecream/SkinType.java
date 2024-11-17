@@ -1,4 +1,4 @@
-package com.website.system.product.antiwrinklecream;
+package com.website.system.product.datamodel.antiwrinklecream;
 
 public enum SkinType {
     NORMAL("normal"),
