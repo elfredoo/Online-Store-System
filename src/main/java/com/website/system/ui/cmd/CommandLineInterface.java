@@ -1,4 +1,4 @@
-package com.website.system.ui.cmdui;
+package com.website.system.ui.cmd;
 
 import com.website.system.cart.ShoppingCartDto;
 import com.website.system.cart.ShoppingCartDtoMapper;
@@ -17,7 +17,6 @@ import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Scanner;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -258,7 +257,8 @@ public class CommandLineInterface {
                 valid = true;
             }catch (ClientNotFoundException | InvalidPasswordException e){
                 System.err.println(e.getMessage());
-                System.out.println("Spróbuj ponownie.");
+                System.out.println("Konto nie istnieje.");
+                logInRegisterOrExit();
             }
         }while(!valid);
     }

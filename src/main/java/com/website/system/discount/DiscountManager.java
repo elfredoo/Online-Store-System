@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -33,6 +34,18 @@ public class DiscountManager {
     public DiscountDto save(Discount discount) {
         Discount savedDiscount = discountRepository.save(discount);
         return discountDtoMapper.map(savedDiscount);
+    }
+
+    @Transactional
+    public void applyDiscount(Long discountId, List<ProductDto> products){
+        Discount discount = discountRepository.findById(discountId).orElseThrow(DiscountNotFoundException::new);
+        List<Product> productToSave = new ArrayList<>();
+        for (ProductDto dto : products) {
+            Product product = productDtoMapper.map(dto);
+            product.setDiscount(discount);
+            productToSave.add(product);
+        }
+        productRepository.saveAll(productToSave);
     }
 
     @Transactional

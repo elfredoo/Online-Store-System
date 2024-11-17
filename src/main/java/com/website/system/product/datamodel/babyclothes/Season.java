@@ -1,4 +1,4 @@
-package com.website.system.product.babyclothes;
+package com.website.system.product.datamodel.babyclothes;
 
 public enum Season {
     WINTER("winter"), SPRING("spring"), SUMMER("summer"), AUTUMN("autumn");

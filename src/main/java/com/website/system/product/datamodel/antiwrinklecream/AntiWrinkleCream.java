@@ -1,6 +1,6 @@
 package com.website.system.product.datamodel.antiwrinklecream;
 
-import com.website.system.product.antiwrinklecream.SkinType;
+
 import com.website.system.product.datamodel.ProductType;
 import com.website.system.product.datamodel.Product;
 import jakarta.persistence.*;
