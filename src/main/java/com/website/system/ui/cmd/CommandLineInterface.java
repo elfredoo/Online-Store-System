@@ -246,6 +246,7 @@ public class CommandLineInterface {
         boolean valid = false;
         do{
             try{
+                System.out.println("Zaloguj się");
                 System.out.println("Wprowadż swój email:");
                 String email = sc.nextLine();
 
